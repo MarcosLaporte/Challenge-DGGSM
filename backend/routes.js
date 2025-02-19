@@ -1,112 +1,143 @@
 const express = require("express");
+const db = require('./db');
 const router = express.Router();
 
-let employees = [
-  {
-    fullName: "Beatriz López",
-    idNo: 25614551,
-    birthDate: "1976/5/15",
-    isDev: false,
-    description: "Especialista en recursos humanos.",
-    area: "RRHH",
-  },
-  {
-    fullName: "Rolando Fernández",
-    idNo: 24178141,
-    birthDate: "1974/8/20",
-    isDev: false,
-    description: "Gerente de logística con más de 20 años de experiencia.",
-    area: "Logística",
-  },
-  {
-    fullName: "Diana Méndez",
-    idNo: 44226347,
-    birthDate: "2006/2/10",
-    isDev: true,
-    description: "Desarrolladora junior en frontend.",
-    area: "Desarrollo Web",
-  },
-  {
-    fullName: "Ailén Gómez",
-    idNo: 28007301,
-    birthDate: "1980/10/5",
-    isDev: true,
-    description: "Ingeniera de software especializada en backend.",
-    area: "Desarrollo Backend",
-  },
-  {
-    fullName: "Bruno Herrera",
-    idNo: 41935663,
-    birthDate: "2003/7/25",
-    isDev: false,
-    description: "Analista financiero en formación.",
-    area: "Finanzas",
-  },
-  {
-    fullName: "Katrina Ríos",
-    idNo: 22428779,
-    birthDate: "1972/3/30",
-    isDev: true,
-    description: "Arquitecta de software con amplia trayectoria.",
-    area: "Arquitectura de Software",
-  },
-  {
-    fullName: "Tomás Pérez",
-    idNo: 33709320,
-    birthDate: "1990/6/12",
-    isDev: false,
-    description: "Encargado de atención al cliente.",
-    area: "Atención al Cliente",
-  },
-  {
-    fullName: "Marilén Suárez",
-    idNo: 41872423,
-    birthDate: "2003/5/18",
-    isDev: true,
-    description: "Desarrolladora de aplicaciones móviles.",
-    area: "Desarrollo Móvil",
-  },
-];
-
-router.get("", (req, res) => {
-  res.json(employees);
+//#region Empleados
+router.get("/employees", async (req, res) => {
+  try {
+    const [employees] = await db.query('SELECT employees.*, areas.area FROM employees, areas WHERE employees.areaId = areas.id');
+    res.json(employees);
+  } catch (err) {
+    res.status(500).json({ error: 'Falló el query.', descr: err });
+  }
 });
 
-router.get("/:idNo", (req, res) => {
-  res.json(employees.find(emp => emp.idNo == req.params.idNo));
+router.get("/employees/:idNo", async (req, res) => {
+  try {
+    const [employees] = await db.query('SELECT e.*, areas.area FROM employees e, areas WHERE e.idNo = ? AND e.areaId = areas.id LIMIT 1', [req.params.idNo]);
+    if (employees.length == 0)
+      return res.status(404).json({ error: 'Empleado no encontrado.' });
+
+    res.json(employees[0]);
+  } catch (err) {
+    res.status(500).json({ error: 'Falló el query.', descr: err });
+  }
 });
 
-router.post("", (req, res) => {
+router.post("/employees", async (req, res) => {
   const newEmp = {
     fullName: req.body.fullName,
     idNo: parseInt(req.body.idNo),
     birthDate: req.body.birthDate,
     isDev: req.body.isDev,
     description: req.body.description,
-    area: req.body.area
+    areaId: parseInt(req.body.areaId)
   };
 
-  employees.push(newEmp);
-  res.status(201).json(newEmp);
+  try {
+    const [result] = await db.query('INSERT INTO employees VALUES (?, ?, ?, ?, ?, ?)',
+      [newEmp.fullName, newEmp.idNo, newEmp.birthDate, newEmp.isDev, newEmp.description, newEmp.areaId]);
+    res.status(201).json({ rowId: result.insertId, employee: newEmp });
+  } catch (err) {
+    res.status(500).json({ error: 'Falló el query.', descr: err });
+  }
 });
 
-router.delete("/:idNo", (req, res) => {
-  employees = employees.filter(emp => emp.idNo != req.params.idNo);
-  res.json({ message: 'Empleado eliminado!' });
+router.delete("/employees/:idNo", async (req, res) => {
+  try {
+    const [result] = await db.query('DELETE FROM employees WHERE idNo = ?', [req.params.idNo]);
+    if (result.affectedRows == 0)
+      return res.status(404).json({ error: 'Empleado no encontrado.' });
+
+    res.json({ msg: 'Empleado eliminado.' });
+  } catch (err) {
+    res.status(500).json({ error: 'Falló el query.', descr: err });
+  }
 });
 
-router.put("/:idNo", (req, res) => {
-  const employee = employees.find(emp => emp.idNo == req.params.idNo);
-  if (!employee) return res.status(404).json({ error: 'Empleado no encontrado.' });
+router.put("/employees/:idNo", async (req, res) => {
+  try {
+    const [employees] = await db.query('SELECT * FROM employees WHERE idNo = ? LIMIT 1', [req.params.idNo]);
+    if (employees.length == 0)
+      return res.status(404).json({ error: 'Empleado no encontrado.' });
 
-  employee.fullName = req.body.fullName ?? employee.fullName;
-  employee.idNo = parseInt(req.body.idNo) ?? employee.idNo;
-  employee.birthDate = req.body.birthDate ?? employee.birthDate;
-  employee.isDev = req.body.isDev ?? employee.isDev;
-  employee.description = req.body.description ?? employee.description;
-  employee.area = req.body.area ?? employee.area;
+    const emp = employees[0];
+    emp.fullName = req.body.fullName ?? emp.fullName;
+    emp.birthDate = req.body.birthDate ?? emp.birthDate;
+    emp.isDev = req.body.isDev ?? emp.isDev;
+    emp.description = req.body.description ?? emp.description;
+    emp.areaId = req.body.areaId ? parseInt(req.body.areaId) : emp.areaId;
 
-  res.json(employee);
+    await db.query('UPDATE employees SET fullName=?, birthDate=?, isDev=?, description=?, areaId=? WHERE idNo = ?',
+      [emp.fullName, emp.birthDate, emp.isDev, emp.description, emp.areaId, emp.idNo]);
+
+    res.json({ msg: 'Empleado modificado.', employee: emp });
+  } catch (err) {
+    res.status(500).json({ error: 'Falló el query.', descr: err });
+  }
 });
+//#endregion
+
+//#region Áreas
+router.get("/areas", async (req, res) => {
+  try {
+    const [areas] = await db.query('SELECT * FROM areas');
+    res.json(areas);
+  } catch (err) {
+    res.status(500).json({ error: 'Falló el query.', descr: err });
+  }
+});
+
+router.get("/areas/:id", async (req, res) => {
+  try {
+    const [areas] = await db.query('SELECT * FROM areas WHERE id = ? LIMIT 1', [req.params.id]);
+    if (areas.length == 0)
+      return res.status(404).json({ error: 'Área no encontrada.' });
+
+    res.json(areas[0]);
+  } catch (err) {
+    res.status(500).json({ error: 'Falló el query.', descr: err });
+  }
+});
+
+router.post("/areas", async (req, res) => {
+  let newArea = { id: 0, area: req.body.area };
+
+  try {
+    const [result] = await db.query('INSERT INTO areas(area) VALUES (?)', [newArea.area]);
+    newArea.id = result.insertId;
+    res.status(201).json({ rowId: result.insertId, area: { newArea } });
+  } catch (err) {
+    res.status(500).json({ error: 'Falló el query.', descr: err });
+  }
+});
+
+router.delete("/areas/:id", async (req, res) => {
+  try {
+    const [result] = await db.query('DELETE FROM areas WHERE id = ?', [req.params.id]);
+    if (result.affectedRows == 0)
+      return res.status(404).json({ error: 'Área no encontrada.' });
+
+    res.json({ msg: 'Área eliminada.' });
+  } catch (err) {
+    res.status(500).json({ error: 'Falló el query.', descr: err });
+  }
+});
+
+router.put("/areas/:id", async (req, res) => {
+  if (req.body.area == null)
+    return res.status(400).json({ error: 'Debe ingresar un área para modificar.' });
+
+  const area = { id: parseInt(req.body.id), area: req.body.area };
+
+  try {
+    await db.query('UPDATE areas SET area=? WHERE id = ?', [area.area, area.id]);
+
+    res.json({ msg: 'Área modificada.', area: area });
+  } catch (err) {
+    res.status(500).json({ error: 'Falló el query.', descr: err });
+  }
+});
+//#endregion
 
 module.exports = router;

@@ -12,4 +12,4 @@ app.listen(PORT, () => {
   console.log(`Server ejecutando en http://localhost:${PORT}`);
 });
 
-app.use("/employees", require("./routes"));
+app.use("", require("./routes"));
