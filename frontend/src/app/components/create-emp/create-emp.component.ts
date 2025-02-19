@@ -40,20 +40,19 @@ export class CreateEmpComponent {
           0,
           [
             Validators.required,
-            Validators.min(1000000),
+            Validators.min(100000),
             Validators.max(99999999),
           ],
         ],
-        dob: [
-          this.currentDate(),
-          [Validators.required, this.noFutureDateValidator],
-        ],
-        isDev: false,
-        description: ['', Validators.required, Validators.maxLength(255)],
+        dob: ['', [Validators.required, this.noFutureDateValidator]],
+        isDev: [false, [Validators.requiredTrue]],
+        description: ['', [Validators.required, Validators.maxLength(255)]],
         areaId: [-1, [Validators.required, Validators.min(1)]],
       },
       { updateOn: 'blur' }
     );
+
+    this.employeeForm.controls['isDev'].markAsTouched();
   }
 
   private noFutureDateValidator(control: AbstractControl): null | object {
@@ -69,6 +68,8 @@ export class CreateEmpComponent {
   protected currentDate = () => formatDate(new Date(), 'yyyy-MM-dd', 'en');
 
   protected submitEmployee() {
-    //TODO:
+    this.employeeForm.markAllAsTouched();
+    if (this.employeeForm.invalid) return;
+
   }
 }

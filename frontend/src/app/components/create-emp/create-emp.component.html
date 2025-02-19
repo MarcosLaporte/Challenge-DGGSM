@@ -5,7 +5,7 @@
       <div class="col-sm-6">
         <label for="fullName" class="form-label fst-italic">Nombre completo</label>
         <input formControlName="fullName" type="text" class="form-control" maxlength="127" id="fullName" required>
-        @if(employeeForm.controls['fullName'].dirty && employeeForm.controls['fullName'].errors) {
+        @if(employeeForm.controls['fullName'].touched && employeeForm.controls['fullName'].errors) {
         <small class="text-danger"> <!-- TODO: Make all error messages Tooltips -->
           @if (employeeForm.controls['fullName'].errors['pattern']) {
           Ingrese al menos un nombre y un apellido (separados por un guión (-) o espacio).
@@ -13,7 +13,7 @@
           }
           @if (employeeForm.controls['fullName'].errors['required']) {
           Debe ingresar un nombre.
-          } @else if (employeeForm.controls['fullName'].errors['maxlength']) {
+          } @if (employeeForm.controls['fullName'].errors['maxlength']) {
           Su nombre no puede contener más de 127 caracteres.
           }
         </small>
@@ -26,7 +26,7 @@
           <span class="input-group-text">&#64;</span>
           <input formControlName="idNo" type="number" class="form-control" min="0" id="idNo" required>
         </div>
-        @if(employeeForm.controls['idNo'].dirty && employeeForm.controls['idNo'].errors){
+        @if(employeeForm.controls['idNo'].touched && employeeForm.controls['idNo'].errors){
         <small class="text-danger">
           El DNI es inválido.
         </small>
@@ -38,7 +38,7 @@
       <div class="col-sm-4">
         <label for="dob" class="form-label fst-italic">Fecha de nacimiento</label>
         <input formControlName="dob" type="date" class="form-control" id="dob" [max]="currentDate()" required>
-        @if(employeeForm.controls['dob'].dirty && employeeForm.controls['dob'].errors){
+        @if(employeeForm.controls['dob'].touched && employeeForm.controls['dob'].errors){
         <small class="text-danger">
           Seleccione una fecha de nacimiento válida.
         </small>
