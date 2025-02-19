@@ -102,9 +102,7 @@ Opté por usar la base de datos MariaDB, debido a que ya he trabajado con ella y
 
 ![1739912560161](image/README/1739912560161.jpg)
 
-#### Consultas SQL
-
-##### 🔍 Consultas básicas
+#### 🔍 Consultas básicas
 
 **Obtener todas las áreas**
 
@@ -144,7 +142,7 @@ SELECT * FROM EMPLOYEES WHERE fullName LIKE '%Texto%';
 
 Encuentra empleados cuyo nombre contenga cierto texto.
 
-##### 🔄 Consultas de inserción
+#### 🔄 Consultas de inserción
 
 **Agregar un área**
 
@@ -165,7 +163,7 @@ VALUES ('Juan Pérez', 123456789, '1990-05-20', TRUE, 'Desarrollador Senior', 10
 
 Agrega un nuevo empleado.
 
-##### 📝 Consultas de actualización
+#### 📝 Consultas de actualización
 
 **Actualizar datos de un empleado**
 
@@ -179,8 +177,6 @@ Modifica información de un empleado.
 
 ---
 
----
-
 **Actualizar el área de un empleado**
 
 ```
@@ -189,7 +185,7 @@ UPDATE EMPLOYEES SET areaId = 2 WHERE idNo = 123456789;
 
 Cambia a un empleado de área.
 
-##### ❌ Consultas de eliminación
+#### ❌ Consultas de eliminación
 
 **Eliminar un empleado**
 
