@@ -7,8 +7,9 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { Area } from '../../utils';
+import { Area, Employee } from '../../utils';
 import { AreaService } from '../../services/area.service';
+import { EmployeeService } from '../../services/employee.service';
 
 @Component({
   selector: 'app-create-emp',
@@ -21,7 +22,7 @@ export class CreateEmpComponent {
   employeeForm: FormGroup;
   private areas: Area[] = [];
 
-  constructor() {
+  constructor(private empServ: EmployeeService) {
     inject(AreaService)
       .getAll()
       .subscribe((areas) => (this.areas = areas));
@@ -71,5 +72,26 @@ export class CreateEmpComponent {
     this.employeeForm.markAllAsTouched();
     if (this.employeeForm.invalid) return;
 
+    const newEmp: Employee = {
+      fullName: <string>this.employeeForm.controls['fullName'].value,
+      idNo: <number>this.employeeForm.controls['idNo'].value,
+      birthDate: <Date>this.employeeForm.controls['dob'].value,
+      isDev: <boolean>this.employeeForm.controls['isDev'].value,
+      description: <string>this.employeeForm.controls['description'].value,
+      areaId: <number>this.employeeForm.controls['areaId'].value,
+    };
+
+    this.empServ.post(newEmp).subscribe({
+      next: (data) => {
+        if (data.affectedRows > 0) {
+          alert('Empleado agregado con éxito!'); //TODO: Use toast msg
+          this.employeeForm.reset();
+        }
+      },
+      error: (err) => {
+        if (err.error.descr.code == 'ER_DUP_ENTRY')
+          alert('Este DNI ya se encuentra registrado.'); //TODO: Use toast msg
+      },
+    });
   }
 }

@@ -37,7 +37,7 @@ router.post("/employees", async (req, res) => {
   try {
     const [result] = await db.query('INSERT INTO employees VALUES (?, ?, ?, ?, ?, ?)',
       [newEmp.fullName, newEmp.idNo, newEmp.birthDate, newEmp.isDev, newEmp.description, newEmp.areaId]);
-    res.status(201).json({ rowId: result.insertId, employee: newEmp });
+    res.status(201).json({ affectedRows: result.affectedRows });
   } catch (err) {
     res.status(500).json({ error: 'Falló el query.', descr: err });
   }
