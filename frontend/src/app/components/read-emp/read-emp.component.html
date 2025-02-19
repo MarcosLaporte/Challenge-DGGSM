@@ -1,0 +1,28 @@
+<div class="container p-5">
+  <h4 class="d-flex justify-content-between align-items-center mb-3">
+    <span class="text-primary">Empleados</span>
+    <span class="badge bg-primary rounded-pill">{{employees.length}}</span>
+  </h4>
+  <table class="table table-striped table-bordered">
+    <thead class="text-center">
+      <th style="width: 20%;">Nombre completo</th>
+      <th style="width: 12.5%;">DNI</th>
+      <th style="width: 12.5%;">Fecha de nac.</th>
+      <th style="width: 10%;">Desarrollador?</th>
+      <th style="width: 30%;">Descripción</th>
+      <th style="width: 15%;">Área</th>
+    </thead>
+    <tbody class="table-group-divider">
+      @for (emp of employees; track $index) {
+      <tr>
+        <td>{{emp.fullName}}</td>
+        <td>{{emp.idNo}}</td>
+        <td>{{emp.birthDate | date:'dd/MM/yyyy'}}</td>
+        <td>{{emp.isDev ? 'Sí' : 'No'}}</td>
+        <td>{{emp.description}}</td>
+        <td>{{areaMap.get(emp.areaId)}}</td>
+      </tr>
+      }
+    </tbody>
+  </table>
+</div>
