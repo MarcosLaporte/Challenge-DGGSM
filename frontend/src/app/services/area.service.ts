@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { DatabaseService } from './DatabaseService';
 import { Area } from '../utils';
 import { HttpClient } from '@angular/common/http';
-import { catchError, filter, map, Observable, pipe, Subscription } from 'rxjs';
+import { map, Observable } from 'rxjs';
 
 const PATH: string = 'http://localhost:3000/areas/';
 @Injectable({
@@ -31,15 +31,15 @@ export class AreaService implements DatabaseService<Area> {
     throw new Error('Method not implemented.');
   }
 
-  post(data: Area): Observable<{}> {
+  post(data: Area): Observable<any> {
+    return this.http.post(PATH, data);
+  }
+
+  put(newData: any): Observable<any> {
     throw new Error('Method not implemented.');
   }
 
-  put(newData: {}): Observable<{}> {
-    throw new Error('Method not implemented.');
-  }
-
-  delete(id: number): Observable<{}> {
+  delete(id: number): Observable<any> {
     throw new Error('Method not implemented.');
   }
 }

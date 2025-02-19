@@ -1,4 +1,4 @@
-import { inject, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { DatabaseService } from './DatabaseService';
 import { HttpClient } from '@angular/common/http';
 import { Employee } from '../utils';
@@ -43,15 +43,15 @@ export class EmployeeService implements DatabaseService<Employee> {
     throw new Error('Method not implemented.');
   }
 
-  post(data: Employee): Observable<{}> {
+  post(data: Employee): Observable<any> {
     return this.http.post(PATH, data);
   }
 
-  put(newData: {}): Observable<{}> {
+  put(newData: any): Observable<any> {
     throw new Error('Method not implemented.');
   }
 
-  delete(id: number): Observable<{}> {
+  delete(id: number): Observable<any> {
     throw new Error('Method not implemented.');
   }
 }
