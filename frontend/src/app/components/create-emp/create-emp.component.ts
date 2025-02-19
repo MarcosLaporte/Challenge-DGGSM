@@ -7,7 +7,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { Area, Employee } from '../../utils';
+import { Area, Employee, ToastError, ToastSuccess } from '../../utils';
 import { AreaService } from '../../services/area.service';
 import { EmployeeService } from '../../services/employee.service';
 
@@ -84,13 +84,13 @@ export class CreateEmpComponent {
     this.empServ.post(newEmp).subscribe({
       next: (data) => {
         if (data.affectedRows > 0) {
-          alert('Empleado agregado con éxito!'); //TODO: Use toast msg
+          ToastSuccess.fire('Empleado agregado con éxito!');
           this.employeeForm.reset();
         }
       },
       error: (err) => {
         if (err.error.descr.code == 'ER_DUP_ENTRY')
-          alert('Este DNI ya se encuentra registrado.'); //TODO: Use toast msg
+          ToastError.fire('Este DNI ya se encuentra registrado.');
       },
     });
   }

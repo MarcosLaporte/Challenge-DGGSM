@@ -215,3 +215,4 @@ Borra un área de la base de datos.
 - `mysql2` - Cliente mySQL para Node
 - `dotenv` - Módulo para cargar variables de entorno
 - `cors` - Connect/Express middleware
+- `sweetalert2` - Librería para mensajes pop-up
