@@ -1,0 +1,88 @@
+<div class="container p-5">
+  <main>
+    <div class="">
+      <h4 class="mb-3">Alta de empleado</h4>
+      <form class="needs-validation" [formGroup]="employeeForm" (ngSubmit)="submitEmployee()">
+        <div class="row g-3">
+          <div class="col-sm-6">
+            <label for="fullName" class="form-label fst-italic">Nombre completo</label>
+            <input formControlName="fullName" type="text" class="form-control" maxlength="127" id="fullName" required>
+            @if(employeeForm.controls['fullName'].dirty && employeeForm.controls['fullName'].errors) {
+            <small class="text-danger"> <!-- TODO: Make all error messages Tooltips -->
+              @if (employeeForm.controls['fullName'].errors['pattern']) {
+              Ingrese al menos un nombre y un apellido (separados por un guión (-) o espacio).
+              Sólo letras (tildes aceptadas).
+              }
+              @if (employeeForm.controls['fullName'].errors['required']) {
+              Debe ingresar un nombre.
+              } @else if (employeeForm.controls['fullName'].errors['maxlength']) {
+              Su nombre no puede contener más de 127 caracteres.
+              }
+            </small>
+            }
+          </div>
+
+          <div class="col-sm-6">
+            <label for="idNo" class="form-label fst-italic">DNI</label>
+            <div class="input-group">
+              <span class="input-group-text">&#64;</span>
+              <input formControlName="idNo" type="number" class="form-control" min="0" id="idNo" required>
+            </div>
+            @if(employeeForm.controls['idNo'].dirty && employeeForm.controls['idNo'].errors){
+            <small class="text-danger">
+              El DNI es inválido.
+            </small>
+            }
+          </div>
+        </div>
+
+        <div class="row g-3">
+          <div class="col-sm-4">
+            <label for="dob" class="form-label fst-italic">Fecha de nacimiento</label>
+            <input formControlName="dob" type="date" class="form-control" id="dob" [max]="currentDate()" required>
+            @if(employeeForm.controls['dob'].dirty && employeeForm.controls['dob'].errors){
+            <small class="text-danger">
+              Seleccione una fecha de nacimiento válida.
+            </small>
+            }
+          </div>
+
+          <div class="col-sm-8">
+            <label class="form-label fst-italic" for="areaId">Área de trabajo</label>
+            <select formControlName="areaId" class="form-select" id="areaId" required>
+              <option [value]="-1">Elija...</option>
+              @for (area of areas; track $index) {
+              <option [value]="area.id">{{area.area}}</option>
+              }
+            </select>
+            @if(employeeForm.controls['areaId'].touched && employeeForm.controls['areaId'].errors){
+            <small class="text-danger">
+              Seleccione un área.
+            </small>
+            }
+          </div>
+        </div>
+
+        <div class="col">
+          <label class="form-label fst-italic" for="description">Descripción</label>
+          <textarea formControlName="description" id="description" class="form-control" maxlength="255"
+            placeholder="Realice una breve descripción de su persona"></textarea>
+          @if(employeeForm.controls['description'].touched && employeeForm.controls['description'].errors){
+          <small class="text-danger">
+            Escriba algo.
+          </small>
+          }
+        </div>
+
+        <div class="form-check mt-2">
+          <input formControlName="isDev" type="checkbox" class="form-check-input" id="isDev">
+          <label class="form-check-label" for="isDev">Es desarrollador</label>
+        </div>
+
+        <hr class="my-4">
+
+        <button class="w-100 btn btn-primary btn-lg" type="submit">Subir empleado</button>
+      </form>
+    </div>
+  </main>
+</div>
