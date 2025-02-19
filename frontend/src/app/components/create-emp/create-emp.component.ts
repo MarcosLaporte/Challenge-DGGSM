@@ -8,6 +8,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Area } from '../../utils';
+import { AreaService } from '../../services/area.service';
 
 @Component({
   selector: 'app-create-emp',
@@ -18,10 +19,12 @@ import { Area } from '../../utils';
 })
 export class CreateEmpComponent {
   employeeForm: FormGroup;
-  readonly areas: Area[];
+  private areas: Area[] = [];
 
   constructor() {
-    this.areas = []; //TODO: Retrieve data from db
+    inject(AreaService)
+      .getAll()
+      .subscribe((areas) => (this.areas = areas));
 
     this.employeeForm = inject(FormBuilder).group(
       {
@@ -60,6 +63,8 @@ export class CreateEmpComponent {
 
     return null;
   }
+
+  public getAreas = () => this.areas;
 
   protected currentDate = () => formatDate(new Date(), 'yyyy-MM-dd', 'en');
 

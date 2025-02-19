@@ -1,0 +1,45 @@
+import { Injectable } from '@angular/core';
+import { DatabaseService } from './DatabaseService';
+import { Area } from '../utils';
+import { HttpClient } from '@angular/common/http';
+import { catchError, filter, map, Observable, pipe, Subscription } from 'rxjs';
+
+const PATH: string = 'http://localhost:3000/areas/';
+@Injectable({
+  providedIn: 'root',
+})
+export class AreaService implements DatabaseService<Area> {
+  constructor(private http: HttpClient) {}
+
+  private isArea(data: any): boolean {
+    return data.hasOwnProperty('id') && data.hasOwnProperty('area');
+  }
+
+  getAll(): Observable<Area[]> {
+    return this.http
+      .get<Area[]>(PATH)
+      .pipe(
+        map((res) =>
+          res
+            .filter((el) => this.isArea(el))
+            .map((el) => ({ id: el.id, area: el.area }))
+        )
+      );
+  }
+
+  get(id: number): Observable<Area> {
+    throw new Error('Method not implemented.');
+  }
+
+  post(data: Area): Observable<{}> {
+    throw new Error('Method not implemented.');
+  }
+
+  put(newData: {}): Observable<{}> {
+    throw new Error('Method not implemented.');
+  }
+
+  delete(id: number): Observable<{}> {
+    throw new Error('Method not implemented.');
+  }
+}
