@@ -12,4 +12,7 @@ app.listen(PORT, () => {
   console.log(`Server ejecutando en http://localhost:${PORT}`);
 });
 
+const cors = require("cors");
+app.use(cors({ origin: "http://localhost:4200" }));
+
 app.use("", require("./routes"));

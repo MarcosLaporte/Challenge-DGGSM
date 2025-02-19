@@ -214,3 +214,4 @@ Borra un área de la base de datos.
 - `Express.js` - Framework para la API
 - `mysql2` - Cliente mySQL para Node
 - `dotenv` - Módulo para cargar variables de entorno
+- `cors` - Connect/Express middleware
