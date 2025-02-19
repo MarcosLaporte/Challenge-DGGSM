@@ -8,13 +8,13 @@ Este proyecto contiene el ejercicio de ingreso/entrevista para el puesto de desa
 
 El proyecto se separa en 5 niveles:
 
-| Hecho | Nivel             | Descripción                                 |
-| :---: | ----------------- | ------------------------------------------- |
-|  ✅   | Repositorio       | Creación de repositorio                     |
-|  ✅   | Backend           | Desarrollo de servidor para API REST        |
-|  ✅   | Base de datos     | Elección y creación de BDD, DER y consultas |
-|       | Frontend          | Desarrollo de página web                    |
-|       | Testeo automático | Desarrollo de pruebas                       |
+| Hecho | Nivel              | Descripción                                  |
+| :---: | ------------------ | --------------------------------------------- |
+|  ✅  | Repositorio        | Creación de repositorio                      |
+|  ✅  | Backend            | Desarrollo de servidor para API REST          |
+|  ✅  | Base de datos      | Elección y creación de BDD, DER y consultas |
+|  ✅  | Frontend           | Desarrollo de página web                     |
+|      | Testeo automático | Desarrollo de pruebas                         |
 
 ## 🌌 API Endpoints
 
