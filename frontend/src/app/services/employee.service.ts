@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Employee } from '../utils';
 import { map, Observable } from 'rxjs';
 
-const PATH: string = 'http://localhost:3000/employees/';
+const PATH: string = '/api/employees';
 @Injectable({
   providedIn: 'root',
 })

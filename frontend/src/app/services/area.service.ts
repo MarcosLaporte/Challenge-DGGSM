@@ -4,7 +4,7 @@ import { Area } from '../utils';
 import { HttpClient } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
 
-const PATH: string = 'http://localhost:3000/areas/';
+const PATH: string = '/api/areas';
 @Injectable({
   providedIn: 'root',
 })
