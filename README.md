@@ -8,13 +8,13 @@ Este proyecto contiene el ejercicio de ingreso/entrevista para el puesto de desa
 
 El proyecto se separa en 5 niveles:
 
-| Hecho | Nivel              | Descripción                                  |
-| :---: | ------------------ | --------------------------------------------- |
-|  ✅  | Repositorio        | Creación de repositorio                      |
-|  ✅  | Backend            | Desarrollo de servidor para API REST          |
-|  ✅  | Base de datos      | Elección y creación de BDD, DER y consultas |
-|  ✅  | Frontend           | Desarrollo de página web                     |
-|      | Testeo automático | Desarrollo de pruebas                         |
+| Hecho | Nivel             | Descripción                                 |
+| :---: | ----------------- | ------------------------------------------- |
+|  ✅   | Repositorio       | Creación de repositorio                     |
+|  ✅   | Backend           | Desarrollo de servidor para API REST        |
+|  ✅   | Base de datos     | Elección y creación de BDD, DER y consultas |
+|  ✅   | Frontend          | Desarrollo de página web                    |
+|       | Testeo automático | Desarrollo de pruebas                       |
 
 ## 🌌 API Endpoints
 
@@ -207,7 +207,85 @@ Borra un área de la base de datos.
 
 ## 👨‍💻 Cómo ejecutar
 
--- Pendiente
+Asegúrese de tener instalado [Node.js](https://nodejs.org/en/download). Si no está seguro de tenerlo instalado, ejecute los siguientes comandos en su terminal:
+
+```
+# Verifica versión de Node.js
+node -v
+
+# Verifica versión de npm
+npm -v
+```
+
+#### 1. Proyecto
+
+Paso 1: Descargue o clone el proyecto utilizando la [URL](https://github.com/MarcosLaporte/Challenge-DGGSM.git) o Github Desktop.
+
+#### 2. Base de datos
+
+Paso 2: Abra su cliente SQL preferido y ejecute la query almacenada en [el archivo creation_query.sql](./creation_query.sql).
+
+#### 3. Backend
+
+Paso 3: Abra su terminal y navegue hasta la carpeta /backend del proyecto.
+
+```
+cd su/ruta/Challenge-DGGSM/backend
+```
+
+---
+
+Paso 4: Instale las dependencias.
+
+```
+npm i
+```
+
+---
+
+Paso 5: Cree un archivo llamado `.env` dentro de /backend y complete dentro del mismo según la configuración del cliente de su base de datos:
+
+```
+DB_HOST=su_host
+DB_USER=su_usuario
+DB_PASSWORD=su_contraseña
+DB_NAME=nombre_base_de_datos
+DB_CONNECTION_LIMIT=(1-10)
+```
+
+---
+
+Paso 6: Ejecute el servidor.
+
+```
+npm run dev
+```
+
+#### 4. Frontend
+
+Paso 7: Abra su terminal y navegue hasta la carpeta /frontend del proyecto.
+
+```
+cd su/ruta/Challenge-DGGSM/frontend
+```
+
+---
+
+Paso 8: Instale las dependencias.
+
+```
+npm i
+```
+
+---
+
+Paso 9: Ejecute el servidor de Angular.
+
+```
+npm start
+```
+
+---
 
 ## 📦 Paquetes
 
