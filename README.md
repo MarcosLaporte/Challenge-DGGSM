@@ -285,6 +285,14 @@ Paso 9: Ejecute el servidor de Angular.
 npm start
 ```
 
+#### 5. Tests
+
+Para ejecutar los casos de prueba para testear la API, ejecute el siguiente comando en su terminal, dentro de la ruta /backend.
+
+```
+npm test
+```
+
 ---
 
 ## 📦 Paquetes
