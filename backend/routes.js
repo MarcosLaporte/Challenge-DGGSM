@@ -7,8 +7,8 @@ router.get("/employees", async (req, res) => {
   try {
     const [employees] = await db.query('SELECT employees.*, areas.area FROM employees, areas WHERE employees.areaId = areas.id');
     res.json(employees);
-  } catch (err) {
-    res.status(500).json({ error: 'Falló el query.', descr: err });
+  } catch (error) {
+    res.status(500).json({ msg: 'Falló el query.', error });
   }
 });
 
@@ -19,8 +19,8 @@ router.get("/employees/:idNo", async (req, res) => {
       return res.status(404).json({ error: 'Empleado no encontrado.' });
 
     res.json(employees[0]);
-  } catch (err) {
-    res.status(500).json({ error: 'Falló el query.', descr: err });
+  } catch (error) {
+    res.status(500).json({ msg: 'Falló el query.', error });
   }
 });
 
@@ -37,9 +37,9 @@ router.post("/employees", async (req, res) => {
   try {
     const [result] = await db.query('INSERT INTO employees VALUES (?, ?, ?, ?, ?, ?)',
       [newEmp.fullName, newEmp.idNo, newEmp.birthDate, newEmp.isDev, newEmp.description, newEmp.areaId]);
-    res.status(201).json({ affectedRows: result.affectedRows });
-  } catch (err) {
-    res.status(500).json({ error: 'Falló el query.', descr: err });
+    res.status(201).json({ insertId: result.insertId });
+  } catch (error) {
+    res.status(500).json({ msg: 'Falló el query.', error });
   }
 });
 
@@ -49,9 +49,9 @@ router.delete("/employees/:idNo", async (req, res) => {
     if (result.affectedRows == 0)
       return res.status(404).json({ error: 'Empleado no encontrado.' });
 
-    res.json({ msg: 'Empleado eliminado.' });
-  } catch (err) {
-    res.status(500).json({ error: 'Falló el query.', descr: err });
+    res.json({ affectedRows: result.affectedRows });
+  } catch (error) {
+    res.status(500).json({ msg: 'Falló el query.', error });
   }
 });
 
@@ -68,12 +68,12 @@ router.put("/employees/:idNo", async (req, res) => {
     emp.description = req.body.description ?? emp.description;
     emp.areaId = req.body.areaId ? parseInt(req.body.areaId) : emp.areaId;
 
-    await db.query('UPDATE employees SET fullName=?, birthDate=?, isDev=?, description=?, areaId=? WHERE idNo = ?',
+    const [result] = await db.query('UPDATE employees SET fullName=?, birthDate=?, isDev=?, description=?, areaId=? WHERE idNo = ?',
       [emp.fullName, emp.birthDate, emp.isDev, emp.description, emp.areaId, emp.idNo]);
 
-    res.json({ msg: 'Empleado modificado.', employee: emp });
-  } catch (err) {
-    res.status(500).json({ error: 'Falló el query.', descr: err });
+    res.json({ affectedRows: result.affectedRows });
+  } catch (error) {
+    res.status(500).json({ msg: 'Falló el query.', error });
   }
 });
 //#endregion
@@ -83,8 +83,8 @@ router.get("/areas", async (req, res) => {
   try {
     const [areas] = await db.query('SELECT * FROM areas');
     res.json(areas);
-  } catch (err) {
-    res.status(500).json({ error: 'Falló el query.', descr: err });
+  } catch (error) {
+    res.status(500).json({ msg: 'Falló el query.', error });
   }
 });
 
@@ -95,8 +95,8 @@ router.get("/areas/:id", async (req, res) => {
       return res.status(404).json({ error: 'Área no encontrada.' });
 
     res.json(areas[0]);
-  } catch (err) {
-    res.status(500).json({ error: 'Falló el query.', descr: err });
+  } catch (error) {
+    res.status(500).json({ msg: 'Falló el query.', error });
   }
 });
 
@@ -106,9 +106,9 @@ router.post("/areas", async (req, res) => {
   try {
     const [result] = await db.query('INSERT INTO areas(area) VALUES (?)', [newArea.area]);
     newArea.id = result.insertId;
-    res.status(201).json({ rowId: result.insertId, area: { newArea } });
-  } catch (err) {
-    res.status(500).json({ error: 'Falló el query.', descr: err });
+    res.status(201).json({ insertId: result.insertId });
+  } catch (error) {
+    res.status(500).json({ msg: 'Falló el query.', error });
   }
 });
 
@@ -118,9 +118,9 @@ router.delete("/areas/:id", async (req, res) => {
     if (result.affectedRows == 0)
       return res.status(404).json({ error: 'Área no encontrada.' });
 
-    res.json({ msg: 'Área eliminada.' });
-  } catch (err) {
-    res.status(500).json({ error: 'Falló el query.', descr: err });
+    res.json({ affectedRows: result.affectedRows });
+  } catch (error) {
+    res.status(500).json({ msg: 'Falló el query.', error });
   }
 });
 
@@ -131,11 +131,11 @@ router.put("/areas/:id", async (req, res) => {
   const area = { id: parseInt(req.params.id), area: req.body.area };
 
   try {
-    await db.query('UPDATE areas SET area=? WHERE id = ?', [area.area, area.id]);
+    const [result] = await db.query('UPDATE areas SET area=? WHERE id = ?', [area.area, area.id]);
 
-    res.json({ msg: 'Área modificada.', area: area });
-  } catch (err) {
-    res.status(500).json({ error: 'Falló el query.', descr: err });
+    res.json({ affectedRows: result.affectedRows });
+  } catch (error) {
+    res.status(500).json({ msg: 'Falló el query.', error });
   }
 });
 //#endregion
