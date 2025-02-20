@@ -18,17 +18,11 @@ export class AreaService implements DatabaseService<Area> {
   getAll(): Observable<Area[]> {
     return this.http
       .get<Area[]>(PATH)
-      .pipe(
-        map((res) =>
-          res
-            .filter((el) => this.isArea(el))
-            .map((el) => ({ id: el.id, area: el.area }))
-        )
-      );
+      .pipe(map((res) => res.filter((el) => this.isArea(el))));
   }
 
   get(id: number): Observable<Area> {
-    throw new Error('Method not implemented.');
+    return this.http.get<Area>(`${PATH}/${id}`);
   }
 
   post(data: Area): Observable<any> {
@@ -36,10 +30,13 @@ export class AreaService implements DatabaseService<Area> {
   }
 
   put(id: number, newData: any): Observable<any> {
-    throw new Error('Method not implemented.');
+    if (newData.hasOwnProperty('id'))
+      console.warn('El ID del área no puede modificarse.');
+
+    return this.http.post(`${PATH}/${id}`, newData);
   }
 
   delete(id: number): Observable<any> {
-    throw new Error('Method not implemented.');
+    return this.http.delete(`${PATH}/${id}`);
   }
 }

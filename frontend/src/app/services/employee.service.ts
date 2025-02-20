@@ -40,7 +40,7 @@ export class EmployeeService implements DatabaseService<Employee> {
   }
 
   get(id: number): Observable<Employee> {
-    throw new Error('Method not implemented.');
+    return this.http.get<Employee>(`${PATH}/${id}`);
   }
 
   post(data: Employee): Observable<any> {
@@ -48,10 +48,13 @@ export class EmployeeService implements DatabaseService<Employee> {
   }
 
   put(id: number, newData: any): Observable<any> {
-    throw new Error('Method not implemented.');
+    if (newData.hasOwnProperty('idNo'))
+      console.warn('El ID del empleado no puede modificarse.');
+
+    return this.http.post(`${PATH}/${id}`, newData);
   }
 
   delete(id: number): Observable<any> {
-    throw new Error('Method not implemented.');
+    return this.http.delete(`${PATH}/${id}`);
   }
 }
