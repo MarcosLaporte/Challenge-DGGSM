@@ -56,20 +56,22 @@ router.delete("/employees/:idNo", async (req, res) => {
 });
 
 router.put("/employees/:idNo", async (req, res) => {
+  const propKeys = ["fullName", "birthDate", "isDev", "description", "areaId"]
+    .filter((k) => req.body[k] !== undefined);
+
+  if (propKeys.length === 0)
+    return res.status(400).json({ error: 'Debe ingresar al menos un dato para modificar.' });
+
+  const setValuesStr = propKeys
+    .map((k) => `${k}=?`)
+    .join(", ");
+
+  const propValues = propKeys
+    .map((k) => req.body[k]);
+
   try {
-    const [employees] = await db.query('SELECT * FROM employees WHERE idNo = ? LIMIT 1', [req.params.idNo]);
-    if (employees.length == 0)
-      return res.status(404).json({ error: 'Empleado no encontrado.' });
-
-    const emp = employees[0];
-    emp.fullName = req.body.fullName ?? emp.fullName;
-    emp.birthDate = req.body.birthDate ?? emp.birthDate;
-    emp.isDev = req.body.isDev ?? emp.isDev;
-    emp.description = req.body.description ?? emp.description;
-    emp.areaId = req.body.areaId ? parseInt(req.body.areaId) : emp.areaId;
-
-    const [result] = await db.query('UPDATE employees SET fullName=?, birthDate=?, isDev=?, description=?, areaId=? WHERE idNo = ?',
-      [emp.fullName, emp.birthDate, emp.isDev, emp.description, emp.areaId, emp.idNo]);
+    const [result] = await db.query(`UPDATE employees SET ${setValuesStr} WHERE idNo = ?`,
+      [...propValues, parseInt(req.params.idNo)]);
 
     res.json({ affectedRows: result.affectedRows });
   } catch (error) {
