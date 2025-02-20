@@ -47,7 +47,7 @@ export class EmployeeService implements DatabaseService<Employee> {
     return this.http.post(PATH, data);
   }
 
-  put(newData: any): Observable<any> {
+  put(id: number, newData: any): Observable<any> {
     throw new Error('Method not implemented.');
   }
 

@@ -35,7 +35,7 @@ export class AreaService implements DatabaseService<Area> {
     return this.http.post(PATH, data);
   }
 
-  put(newData: any): Observable<any> {
+  put(id: number, newData: any): Observable<any> {
     throw new Error('Method not implemented.');
   }
 
