@@ -128,7 +128,7 @@ router.put("/areas/:id", async (req, res) => {
   if (req.body.area == null)
     return res.status(400).json({ error: 'Debe ingresar un área para modificar.' });
 
-  const area = { id: parseInt(req.body.id), area: req.body.area };
+  const area = { id: parseInt(req.params.id), area: req.body.area };
 
   try {
     await db.query('UPDATE areas SET area=? WHERE id = ?', [area.area, area.id]);
