@@ -294,3 +294,5 @@ npm start
 - `dotenv` - Módulo para cargar variables de entorno
 - `cors` - Connect/Express middleware
 - `sweetalert2` - Librería para mensajes pop-up
+- `jest `- Framework para los tests
+- `supertest `- Librería para testear peticiones HTTP
