@@ -8,6 +8,8 @@ CREATE TABLE
     area VARCHAR(127) NOT NULL
   );
 
+ALTER TABLE AREAS AUTO_INCREMENT = 101;
+
 CREATE TABLE
   IF NOT EXISTS EMPLOYEES (
     fullName VARCHAR(127) NOT NULL,
@@ -47,7 +49,8 @@ VALUES
     24178141,
     '1974-08-20',
     0,
-    'Gerente de logística con más de 20 años de experiencia,' 102
+    'Gerente de logística con más de 20 años de experiencia',
+    102
   ),
   (
     'Beatriz López',
