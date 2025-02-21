@@ -103,11 +103,8 @@ router.get("/areas/:id", async (req, res) => {
 });
 
 router.post("/areas", async (req, res) => {
-  let newArea = { id: 0, area: req.body.area };
-
   try {
-    const [result] = await db.query('INSERT INTO areas(area) VALUES (?)', [newArea.area]);
-    newArea.id = result.insertId;
+    const [result] = await db.query('INSERT INTO areas(area) VALUES (?)', [req.body.area]);
     res.status(201).json({ insertId: result.insertId });
   } catch (error) {
     res.status(500).json(error);
