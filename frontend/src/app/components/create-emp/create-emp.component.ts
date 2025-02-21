@@ -46,7 +46,7 @@ export class CreateEmpComponent {
           ],
         ],
         dob: ['', [Validators.required, this.noFutureDateValidator]],
-        isDev: [false, [Validators.requiredTrue]],
+        isDev: false,
         description: ['', [Validators.required, Validators.maxLength(255)]],
         areaId: [-1, [Validators.required, Validators.min(1)]],
       },
