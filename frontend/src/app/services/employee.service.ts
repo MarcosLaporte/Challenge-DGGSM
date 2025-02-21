@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Employee } from '../utils';
 import { map, Observable } from 'rxjs';
 
-const PATH: string = '/api/employees';
+const EMPLOYEE_API_PATH: string = '/api/employees';
 @Injectable({
   providedIn: 'root',
 })
@@ -23,7 +23,7 @@ export class EmployeeService implements DatabaseService<Employee> {
   }
 
   getAll(): Observable<Employee[]> {
-    return this.http.get<Employee[]>(PATH).pipe(
+    return this.http.get<Employee[]>(EMPLOYEE_API_PATH).pipe(
       map((res) =>
         res
           .filter((el) => this.isEmployee(el))
@@ -40,21 +40,21 @@ export class EmployeeService implements DatabaseService<Employee> {
   }
 
   get(id: number): Observable<Employee> {
-    return this.http.get<Employee>(`${PATH}/${id}`);
+    return this.http.get<Employee>(`${EMPLOYEE_API_PATH}/${id}`);
   }
 
   post(data: Employee): Observable<any> {
-    return this.http.post(PATH, data);
+    return this.http.post(EMPLOYEE_API_PATH, data);
   }
 
   put(id: number, newData: any): Observable<any> {
     if (newData.hasOwnProperty('idNo'))
       console.warn('El ID del empleado no puede modificarse.');
 
-    return this.http.put(`${PATH}/${id}`, newData);
+    return this.http.put(`${EMPLOYEE_API_PATH}/${id}`, newData);
   }
 
   delete(id: number): Observable<any> {
-    return this.http.delete(`${PATH}/${id}`);
+    return this.http.delete(`${EMPLOYEE_API_PATH}/${id}`);
   }
 }

@@ -4,7 +4,7 @@ import { Area } from '../utils';
 import { HttpClient } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
 
-const PATH: string = '/api/areas';
+export const AREA_API_PATH: string = '/api/areas';
 @Injectable({
   providedIn: 'root',
 })
@@ -17,26 +17,26 @@ export class AreaService implements DatabaseService<Area> {
 
   getAll(): Observable<Area[]> {
     return this.http
-      .get<Area[]>(PATH)
+      .get<Area[]>(AREA_API_PATH)
       .pipe(map((res) => res.filter((el) => this.isArea(el))));
   }
 
   get(id: number): Observable<Area> {
-    return this.http.get<Area>(`${PATH}/${id}`);
+    return this.http.get<Area>(`${AREA_API_PATH}/${id}`);
   }
 
   post(data: Area): Observable<any> {
-    return this.http.post(PATH, data);
+    return this.http.post(AREA_API_PATH, data);
   }
 
   put(id: number, newData: any): Observable<any> {
     if (newData.hasOwnProperty('id'))
       console.warn('El ID del área no puede modificarse.');
 
-    return this.http.put(`${PATH}/${id}`, newData);
+    return this.http.put(`${AREA_API_PATH}/${id}`, newData);
   }
 
   delete(id: number): Observable<any> {
-    return this.http.delete(`${PATH}/${id}`);
+    return this.http.delete(`${AREA_API_PATH}/${id}`);
   }
 }
