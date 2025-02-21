@@ -8,7 +8,7 @@ router.get("/employees", async (req, res) => {
     const [employees] = await db.query('SELECT employees.*, areas.area FROM employees, areas WHERE employees.areaId = areas.id');
     res.json(employees);
   } catch (error) {
-    res.status(500).json({ msg: 'Falló el query.', error });
+    res.status(500).json(error);
   }
 });
 
@@ -20,7 +20,7 @@ router.get("/employees/:idNo", async (req, res) => {
 
     res.json(employees[0]);
   } catch (error) {
-    res.status(500).json({ msg: 'Falló el query.', error });
+    res.status(500).json(error);
   }
 });
 
@@ -39,7 +39,7 @@ router.post("/employees", async (req, res) => {
       [newEmp.fullName, newEmp.idNo, newEmp.birthDate, newEmp.isDev, newEmp.description, newEmp.areaId]);
     res.status(201).json({ insertId: result.insertId });
   } catch (error) {
-    res.status(500).json({ msg: 'Falló el query.', error });
+    res.status(500).json(error);
   }
 });
 
@@ -51,7 +51,7 @@ router.delete("/employees/:idNo", async (req, res) => {
 
     res.json({ affectedRows: result.affectedRows });
   } catch (error) {
-    res.status(500).json({ msg: 'Falló el query.', error });
+    res.status(500).json(error);
   }
 });
 
@@ -75,7 +75,7 @@ router.put("/employees/:idNo", async (req, res) => {
 
     res.json({ affectedRows: result.affectedRows });
   } catch (error) {
-    res.status(500).json({ msg: 'Falló el query.', error });
+    res.status(500).json(error);
   }
 });
 //#endregion
@@ -86,7 +86,7 @@ router.get("/areas", async (req, res) => {
     const [areas] = await db.query('SELECT * FROM areas');
     res.json(areas);
   } catch (error) {
-    res.status(500).json({ msg: 'Falló el query.', error });
+    res.status(500).json(error);
   }
 });
 
@@ -98,7 +98,7 @@ router.get("/areas/:id", async (req, res) => {
 
     res.json(areas[0]);
   } catch (error) {
-    res.status(500).json({ msg: 'Falló el query.', error });
+    res.status(500).json(error);
   }
 });
 
@@ -110,7 +110,7 @@ router.post("/areas", async (req, res) => {
     newArea.id = result.insertId;
     res.status(201).json({ insertId: result.insertId });
   } catch (error) {
-    res.status(500).json({ msg: 'Falló el query.', error });
+    res.status(500).json(error);
   }
 });
 
@@ -122,7 +122,7 @@ router.delete("/areas/:id", async (req, res) => {
 
     res.json({ affectedRows: result.affectedRows });
   } catch (error) {
-    res.status(500).json({ msg: 'Falló el query.', error });
+    res.status(500).json(error);
   }
 });
 
@@ -137,7 +137,7 @@ router.put("/areas/:id", async (req, res) => {
 
     res.json({ affectedRows: result.affectedRows });
   } catch (error) {
-    res.status(500).json({ msg: 'Falló el query.', error });
+    res.status(500).json(error);
   }
 });
 //#endregion

@@ -89,7 +89,7 @@ export class CreateEmpComponent {
         }
       },
       error: (err) => {
-        if (err.error.descr.code == 'ER_DUP_ENTRY')
+        if (err.error.code == 'ER_DUP_ENTRY')
           ToastError.fire('Este DNI ya se encuentra registrado.');
       },
     });
