@@ -6,15 +6,14 @@
         <label for="fullName" class="form-label fst-italic">Nombre completo</label>
         <input formControlName="fullName" type="text" class="form-control" maxlength="127" id="fullName" required>
         @if(employeeForm.controls['fullName'].touched && employeeForm.controls['fullName'].errors) {
-        <small class="text-danger"> <!-- TODO: Make all error messages Tooltips -->
-          @if (employeeForm.controls['fullName'].errors['pattern']) {
-          Ingrese al menos un nombre y un apellido (separados por un guión (-) o espacio).
-          Sólo letras (tildes aceptadas).
-          }
+        <small class="text-danger">
           @if (employeeForm.controls['fullName'].errors['required']) {
           Debe ingresar un nombre.
-          } @if (employeeForm.controls['fullName'].errors['maxlength']) {
+          } @else if (employeeForm.controls['fullName'].errors['maxlength']) {
           Su nombre no puede contener más de 127 caracteres.
+          } @else if (employeeForm.controls['fullName'].errors['pattern']) {
+          Ingrese al menos un nombre y un apellido (separados por un guión (-) o espacio).
+          Sólo letras (tildes aceptadas).
           }
         </small>
         }
@@ -23,7 +22,7 @@
       <div class="col-sm-6">
         <label for="idNo" class="form-label fst-italic">DNI</label>
         <div class="input-group">
-          <span class="input-group-text">&#64;</span>
+          <span class="input-group-text">#</span>
           <input formControlName="idNo" type="number" class="form-control" min="0" id="idNo" required>
         </div>
         @if(employeeForm.controls['idNo'].touched && employeeForm.controls['idNo'].errors){
