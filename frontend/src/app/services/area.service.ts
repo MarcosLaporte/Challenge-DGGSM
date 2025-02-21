@@ -33,7 +33,7 @@ export class AreaService implements DatabaseService<Area> {
     if (newData.hasOwnProperty('id'))
       console.warn('El ID del área no puede modificarse.');
 
-    return this.http.post(`${PATH}/${id}`, newData);
+    return this.http.put(`${PATH}/${id}`, newData);
   }
 
   delete(id: number): Observable<any> {

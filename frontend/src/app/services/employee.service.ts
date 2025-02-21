@@ -51,7 +51,7 @@ export class EmployeeService implements DatabaseService<Employee> {
     if (newData.hasOwnProperty('idNo'))
       console.warn('El ID del empleado no puede modificarse.');
 
-    return this.http.post(`${PATH}/${id}`, newData);
+    return this.http.put(`${PATH}/${id}`, newData);
   }
 
   delete(id: number): Observable<any> {
