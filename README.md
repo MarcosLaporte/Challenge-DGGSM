@@ -8,13 +8,13 @@ Este proyecto contiene el ejercicio de ingreso/entrevista para el puesto de desa
 
 El proyecto se separa en 5 niveles:
 
-| Hecho | Nivel             | Descripción                                 |
-| :---: | ----------------- | ------------------------------------------- |
-|  ✅   | Repositorio       | Creación de repositorio                     |
-|  ✅   | Backend           | Desarrollo de servidor para API REST        |
-|  ✅   | Base de datos     | Elección y creación de BDD, DER y consultas |
-|  ✅   | Frontend          | Desarrollo de página web                    |
-|       | Testeo automático | Desarrollo de pruebas                       |
+| Hecho | Nivel              | Descripción                                  |
+| :---: | ------------------ | --------------------------------------------- |
+|  ✅  | Repositorio        | Creación de repositorio                      |
+|  ✅  | Backend            | Desarrollo de servidor para API REST          |
+|  ✅  | Base de datos      | Elección y creación de BDD, DER y consultas |
+|  ✅  | Frontend           | Desarrollo de página web                     |
+|  ✅  | Testeo automático | Desarrollo de pruebas                         |
 
 ## 🌌 API Endpoints
 
@@ -227,7 +227,7 @@ Paso 2: Abra su cliente SQL preferido y ejecute la query almacenada en [el archi
 
 #### 3. Backend
 
-Paso 3: Abra su terminal y navegue hasta la carpeta /backend del proyecto.
+Paso 3: Abra su terminal y navegue hasta la carpeta **/backend** del proyecto.
 
 ```
 cd su/ruta/Challenge-DGGSM/backend
@@ -243,7 +243,7 @@ npm i
 
 ---
 
-Paso 5: Cree un archivo llamado `.env` dentro de /backend y complete dentro del mismo según la configuración del cliente de su base de datos:
+Paso 5: Cree un archivo llamado `.env` dentro de **/backend** y complete dentro del mismo según la configuración del cliente de su base de datos:
 
 ```
 DB_HOST=su_host
@@ -263,7 +263,7 @@ npm run dev
 
 #### 4. Frontend
 
-Paso 7: Abra su terminal y navegue hasta la carpeta /frontend del proyecto.
+Paso 7: Abra su terminal y navegue hasta la carpeta **/frontend** del proyecto.
 
 ```
 cd su/ruta/Challenge-DGGSM/frontend
@@ -282,15 +282,15 @@ npm i
 Paso 9: Ejecute el servidor de Angular.
 
 ```
-npm start
+npm run start
 ```
 
 #### 5. Tests
 
-Para ejecutar los casos de prueba para testear la API, ejecute el siguiente comando en su terminal, dentro de la ruta /backend.
+Para ejecutar los casos de prueba para testear la API, ejecute el siguiente comando en su terminal, dentro de la ruta **/backend** o **/frontend**.
 
 ```
-npm test
+npm run test
 ```
 
 ---
@@ -302,5 +302,7 @@ npm test
 - `dotenv` - Módulo para cargar variables de entorno
 - `cors` - Connect/Express middleware
 - `sweetalert2` - Librería para mensajes pop-up
-- `jest `- Framework para los tests
-- `supertest `- Librería para testear peticiones HTTP
+- `jest` - Framework para los API tests en Node
+- `supertest` - Librería para testear peticiones HTTP (Node)
+- `jasmine` - Framework para testear los servicios y componentes de Angular
+- `karma` - Módulo para ejecutar tests de Angular
